@@ -1,4 +1,5 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup, \
+    ReplyKeyboardRemove
 
 
 class Btn:
@@ -22,6 +23,10 @@ class Btn:
         markup.row(self.rules, self.statistics)
         return markup
 
+    @staticmethod
+    def remove_keyboard():
+        return ReplyKeyboardRemove
+
 
 class StrawberryGame(Btn):
     """Класс кнопок игры про клубничку"""
@@ -31,6 +36,6 @@ class StrawberryGame(Btn):
         """Создание клавиатуры для игры"""
         markup = ReplyKeyboardMarkup(resize_keyboard=True)
         for i in range(count):
-            markup.add(KeyboardButton("🍓"*(i+1)))
+            markup.add(KeyboardButton("🍓" * (i + 1)))
         markup.row(self.surrender)
         return markup

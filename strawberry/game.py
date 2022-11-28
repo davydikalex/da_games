@@ -1,10 +1,11 @@
 from aiogram import types
-from additions.state import States
-from additions.keyboard import StrawberryGame
-from aiogram.types import ReplyKeyboardRemove
-import random
 from aiogram import Dispatcher
 
+import random
+
+
+from additions.state import States
+from additions.keyboard import StrawberryGame
 
 kb = StrawberryGame()
 
@@ -12,7 +13,7 @@ kb = StrawberryGame()
 async def start_game(message: types.Message):
     """Старт игры"""
     await message.answer('Игра Клубника коня', reply_markup=kb.start_games())
-    await States.update_state(message, States.STATE_2)
+    await States.update_state(message, States.START_GAME)
 
 
 async def begin(message: types.Message):
@@ -26,8 +27,8 @@ async def begin(message: types.Message):
 
 
 async def run_game(message: types.Message):
-    await message.answer('Введите количество с которого начнем: 20-30', reply_markup=ReplyKeyboardRemove())
-    await States.update_state(message, States.STATE_3)
+    await message.answer('Введите количество с которого начнем: 20-30', reply_markup=kb.remove_keyboard())
+    await States.update_state(message, States.FIRST_STEP)
 
 
 async def first_step(message: types.Message):
@@ -37,7 +38,7 @@ async def first_step(message: types.Message):
         pretty_print = '🍓 ' * message.strawberry_count
         await message.answer(f'{pretty_print}'
                            f'Ваш выбор', reply_markup=kb.games())
-        await States.update_state(message, States.STATE_4)
+        await States.update_state(message, States.GAME_STEP)
     else:
         await message.answer('Введите количество с которого начнем: 20-30')
 
@@ -71,9 +72,9 @@ async def next_step(message: types.Message):
         else:
             await message.answer(f'{pretty_print}'
                                f'Ваш выбор', reply_markup=kb.games(count=message.strawberry_count))
-            await States.update_state(message, 5)
+            await States.update_state(message, States.FINAL_GAME)
     else:
-        await message.answer(f'Хорош, я проиграл', reply_markup=ReplyKeyboardRemove())
+        await message.answer(f'Хорош, я проиграл', reply_markup=kb.remove_keyboard())
 
 
 async def exit_game(message: types.Message):
@@ -84,12 +85,12 @@ async def exit_game(message: types.Message):
 
 async def the_end(message: types.Message):
     if message.text == '🍓':
-        await message.answer(f'Хорош, ты проиграл', reply_markup=ReplyKeyboardRemove())
+        await message.answer(f'Хорош, ты проиграл', reply_markup=kb.remove_keyboard())
 
 
 def register_handler_game1(dispatcher: Dispatcher):
     # Хендлеры для первой игры
-    dispatcher.register_message_handler(begin, state=States.STATE_2)
-    dispatcher.register_message_handler(first_step, state=States.STATE_3)
-    dispatcher.register_message_handler(next_step_reply, state=States.STATE_4)
-    dispatcher.register_message_handler(the_end, state=States.STATE_5)
+    dispatcher.register_message_handler(begin, state=States.START_GAME)
+    dispatcher.register_message_handler(first_step, state=States.FIRST_STEP)
+    dispatcher.register_message_handler(next_step_reply, state=States.GAME_STEP)
+    dispatcher.register_message_handler(the_end, state=States.FINAL_GAME)
