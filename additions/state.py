@@ -1,4 +1,4 @@
-from game.config.config import dp
+from config.config import dp
 from aiogram.dispatcher.filters.state import State, StatesGroup
 
 

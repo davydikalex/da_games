@@ -1,11 +1,17 @@
 from aiogram.utils import executor
-from config.config import dp
+from config.config import get
+from aiogram import Bot, Dispatcher
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
 from additions.state import States
 # from database import DataBase
 
 import game_sort
 import strawberry.game1
+
+
+bot = Bot(get('TOKEN'))
+dp = Dispatcher(bot=bot, storage=MemoryStorage())
 
 # async def on_startup(_):
 #     users = DataBase.cursor.execute('SELECT user_id, user_state, user_inputname FROM Users')

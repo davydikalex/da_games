@@ -1,6 +1,4 @@
 import configparser
-from aiogram import Bot, Dispatcher
-from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
 
 def get(option: str, section='general'):
@@ -21,5 +19,3 @@ def get(option: str, section='general'):
     return value
 
 
-bot = Bot(get('TOKEN'))
-dp = Dispatcher(bot=bot, storage=MemoryStorage())
