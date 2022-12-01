@@ -16,7 +16,6 @@ class DataBase:
                 port='5432'
             )
             cursor = connect.cursor()
-            print('<h2>Подключение к базе данных выполнено успешно</h2>')
             if read:
                 cursor.execute(query, args)
                 return cursor.fetchall()
@@ -130,5 +129,19 @@ class DataBase:
           chat_id = %s
         """
         return self.execute_query(query, lose, chatID)
+
+    def statistics(self, chatID):
+        """Добавление поражения"""
+        query = """
+        SELECT
+            win, lose
+        FROM
+            users
+        WHERE
+            chat_id = %s
+        """
+        statistics = self.execute_query(query, chatID, read=True)[0]
+        return statistics
+
 
 

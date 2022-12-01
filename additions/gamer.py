@@ -6,7 +6,7 @@ db = DataBase()
 class Gamer:
     def __init__(self, chat_id):
         self.chat_id = str(chat_id)
-        self.strawberry_count = db.check_strawberry_count(str(chat_id))  # TODO Брать из бд по чат_ид
+        self.strawberry_count = db.check_strawberry_count(str(chat_id))
 
     def update_strawberry_count(self, count):
         self.strawberry_count += count
@@ -21,3 +21,8 @@ class Gamer:
             db.update_stat_win(self.chat_id)
         else:
             db.update_stat_lose(self.chat_id)
+
+    def print_stat(self):
+        return db.statistics(self.chat_id)
+
+

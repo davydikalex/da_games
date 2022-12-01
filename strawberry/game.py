@@ -20,8 +20,15 @@ async def begin(message: types.Message):
         await run_game(message)
     if message.text == "Правила":
         await rules(message)
-    # if message.text == 'Статистика':
-    #     await statistics(message)
+    if message.text == 'Статистика':
+        await statistics(message)
+
+
+async def statistics(message: types.Message):
+    gamer = Gamer(message.from_user.id)
+    stat = gamer.print_stat()
+    await message.answer(f'Победы: {stat[0]}\n'
+                         f'Поражения: {stat[1]}')
 
 
 async def rules(message: types.Message):
@@ -73,14 +80,15 @@ async def next_step(message: types.Message):
         saf = {1: 'у', 2: 'и', 3: 'и'}
         await message.answer(f'Отлично, а я уберу {a} клубничк{saf[a]}')
         if not gamer.strawberry_count == 1:
-            await message.answer(f'{pretty_print}'
+            await message.answer(f'{pretty_print}\n'
                                  f'Ваш выбор', reply_markup=kb.games())
         else:
-            await message.answer(f'{pretty_print}'
+            await message.answer(f'{pretty_print}\n'
                                  f'Ваш выбор', reply_markup=kb.games(count=gamer.strawberry_count))
             await States.update_state(message, States.FINAL_GAME)
     else:
-        await message.answer(f'Хорош, я проиграл', reply_markup=kb.remove_keyboard())
+        await message.answer(f'Хорош, я проиграл', reply_markup=kb.start_games())
+        await States.update_state(message, States.START_GAME)
         gamer.update_strawberry_count(0)
         gamer.update_stat()
 
@@ -88,7 +96,8 @@ async def next_step(message: types.Message):
 async def the_end(message: types.Message):
     gamer = Gamer(message.from_user.id)
     if message.text == '🍓':
-        await message.answer(f'Хорош, ты проиграл', reply_markup=kb.remove_keyboard())
+        await message.answer(f'Хорош, ты проиграл', reply_markup=kb.start_games())
+        await States.update_state(message, States.START_GAME)
     gamer.update_strawberry_count(0)
     gamer.update_stat(win=False)
 

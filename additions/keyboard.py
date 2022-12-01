@@ -13,7 +13,6 @@ class Btn:
         """Создание клавиатуры для регистрации"""
         markup = ReplyKeyboardMarkup(resize_keyboard=True)
         markup.row(self.strawberry)
-        markup.row(self.statistics)
         return markup
 
     def start_games(self):

@@ -24,8 +24,6 @@ async def main_menu(message: types.Message):
 
     if message.text == "Гнилая клубника":
         await sg1.start_game(message)
-    if message.text == "Статистика":
-        await message.answer(f'Вот ваша статистика которую я соберу с бд по меседжИД')
 
 
 def register_handler_game_sort(dispatcher: Dispatcher):
