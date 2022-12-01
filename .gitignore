@@ -1,2 +1,6 @@
 ﻿*.ini
 *.ini
+config/config.ini
+additions/__pycache__
+__pycache__
+__pycache__

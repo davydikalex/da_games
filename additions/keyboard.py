@@ -25,7 +25,7 @@ class Btn:
 
     @staticmethod
     def remove_keyboard():
-        return ReplyKeyboardRemove
+        return ReplyKeyboardRemove()
 
 
 class StrawberryGame(Btn):

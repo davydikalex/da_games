@@ -1,4 +1,6 @@
 import configparser
+from aiogram import Bot, Dispatcher
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
 
 def get(option: str, section='general'):
@@ -11,11 +13,13 @@ def get(option: str, section='general'):
         | Если нет задана, вернёт None
         """
     config = configparser.ConfigParser()
-    config.read('config.ini')
-    try:
-        value = config.get(section, option)
-    except Exception:
-        return None
+    config.read('config/config.ini')
+    # try:
+    value = config.get(section, option)
+    # except Exception:
+    #     return None
     return value
 
 
+bot = Bot(get('TOKEN'))
+dp = Dispatcher(bot=bot, storage=MemoryStorage())

@@ -1,4 +1,4 @@
-from run import dp
+from config.config import dp
 from aiogram.dispatcher.filters.state import State, StatesGroup
 
 
@@ -17,6 +17,6 @@ class States(StatesGroup):
         :param argument: Новый state
         """
 
-        state = dp.get_current().current_state(user=message.from_user.id, chat=message.from_user.id)
+        state = dp.get_current().current_state(user=message.from_user.id)
         await state.set_state(argument)
 
