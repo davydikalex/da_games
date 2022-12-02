@@ -1,14 +1,12 @@
-FROM python
+FROM python:latest
 
-WORKDIR /bot
+RUN mkdir -p /usr/src/app
 
-COPY . .
+WORKDIR /usr/src/app
 
 COPY requirements.txt .
-RUN python -m pip install --no-cache-dir --requirement requirements.txt
+RUN pip install -r requirements.txt
 
 COPY . .
 
-CMD ["run.py"]
-
-#docker build -t *name* .
+CMD [ "python", "./run.py" ]
