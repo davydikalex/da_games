@@ -2,9 +2,9 @@ from aiogram.utils import executor
 from config.config import dp
 
 import game_sort
-import strawberry.game
+import games.strawberry.game
 
-strawberry.game.register_handler_game1(dp)
+games.strawberry.game.register_handler_game1(dp)
 game_sort.register_handler_game_sort(dp)
 
 

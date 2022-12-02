@@ -3,12 +3,7 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 
 
 class States(StatesGroup):
-
-    MAIN_MENU = State()  # Зарегистрированный пользователь
-    START_GAME = State()  # Зарегистрированный пользователь
-    FIRST_STEP = State()  # Зарегистрированный пользователь
-    GAME_STEP = State()  # Зарегистрированный пользователь
-    FINAL_GAME = State()  # Зарегистрированный пользователь
+    MAIN_MENU = State()  # Главное меню
 
     @staticmethod
     async def update_state(message, argument):
@@ -19,4 +14,5 @@ class States(StatesGroup):
 
         state = dp.get_current().current_state(user=message.from_user.id)
         await state.set_state(argument)
+
 
