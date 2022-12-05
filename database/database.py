@@ -24,5 +24,19 @@ class DataBase:
                 cursor.execute(query, args)
                 connect.commit()
                 connect.close()
+            print(f'<h2>Соединение было </h2>')
         except OperationalError as error:
             print(f'<h2>Ошибка подключения к БД: {error} </h2>')
+
+    def create_table(self):
+        """Создание таблицы strawberry_count
+        """
+        query = """
+        CREATE TABLE users  
+        (chat_id TEXT NOT NULL,
+        strawberry_count INT NOT NULL,
+        win INT,
+        lose INT)
+        """
+        self.execute_query(query)
+        print('TABLE CREATE')

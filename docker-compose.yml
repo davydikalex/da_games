@@ -1,28 +1,13 @@
-version: '3.9'
-
+version: "3.9"
 services:
   postgres:
-    container_name: postgres
-    image: postgres:13
-    healthcheck:
-      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "postgres" ]
-      timeout: 45s
-      interval: 10s
-      retries: 10
-    restart: always
-    ports:
-      - 5432:5432
+    image: postgres:13.3
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1478
-      POSTGRES_DB: postgres
-      APP_DB_USER: docker
-      APP_DB_PASS: docker
-    networks:
-      - ompnw
-    volumes:
-      # - pgdata:/var/lib/postgresql/data
-      - ./scripts/init-database.sh:/docker-entrypoint-initdb.d/init-database.sh
+      POSTGRES_DB: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - "5432:5432"
 
   da-games:
     container_name: da-games
@@ -30,10 +15,7 @@ services:
       context: .
       dockerfile: Dockerfile
     restart: unless-stopped
-    networks:
-      - ompnw
-    ports:
-      - 40000:40000 # Debug port
+
     healthcheck:
       test: [ 'CMD', 'curl', '-v', 'http://localhost:8000/live' ]
       interval: 10s
