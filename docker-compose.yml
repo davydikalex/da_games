@@ -1,27 +1,27 @@
 version: "3.9"
+
+
 services:
-  postgres:
+  pg_db:
     image: postgres:13.3
+    restart: always
     environment:
       POSTGRES_DB: "postgres"
       POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_PASSWORD: "1478"
     ports:
       - "5432:5432"
 
-  da-games:
+
+
+  games:
     container_name: da-games
     build:
       context: .
       dockerfile: Dockerfile
-    restart: unless-stopped
+    network_mode: host
+    depends_on:
+      - pg_db
+    ports:
+      - "3000:8000"
 
-    healthcheck:
-      test: [ 'CMD', 'curl', '-v', 'http://localhost:8000/live' ]
-      interval: 10s
-      timeout: 10s
-      retries: 2
-      start_period: 20s
-    volumes:
-      - ./migrations:/root/migrations
-      - ./config.yml:/root/config.yml

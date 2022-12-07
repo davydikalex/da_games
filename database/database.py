@@ -24,7 +24,7 @@ class DataBase:
                 cursor.execute(query, args)
                 connect.commit()
                 connect.close()
-            print(f'<h2>Соединение было </h2>')
+            print(f'<h2>Соединение было</h2>')
         except OperationalError as error:
             print(f'<h2>Ошибка подключения к БД: {error} </h2>')
 
