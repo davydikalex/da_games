@@ -1,3 +1,5 @@
+from time import sleep
+
 from aiogram.utils import executor
 from config.config import dp
 from database.database import DataBase
@@ -16,6 +18,7 @@ async def shutdown(dispatcher):
 
 
 async def on_startup(_):
+    sleep(10)
     db.create_table()
 
 
