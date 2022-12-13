@@ -54,18 +54,24 @@ async def statistics(message: types.Message):
 
 
 async def rules(message: types.Message):
-    await message.answer('Правила:\nВыбирай начальное количество клубничек🍓. \nДалее по очереди убираете по 1-3 '
-                         'клубнички.\nПроиграл тот кто забрал последнюю клубничку')
+    await message.answer('Правила:\n'
+                         'Выбирай начальное количество клубничек🍓.\n'
+                         'Далее по очереди убираете по 1-3 клубнички.\n'
+                         'Проиграл тот кто забрал последнюю клубничку')
 
 
 async def run_game(message: types.Message):
-    await message.answer('Введите количество 🍓 с которого начнем: от 20 до 30:', reply_markup=kb.remove_keyboard())
+    await message.answer('Введите количество 🍓 '
+                         'с которого начнем: от 20 до 30:',
+                         reply_markup=kb.remove_keyboard())
     await StrState.update_state(message, StrState.FIRST_STEP)
 
 
 async def first_step(message: types.Message):
     """Первый ход"""
-    if message.text.isnumeric() and (int(message.text) >= 20) and (int(message.text) <= 30):
+    if message.text.isnumeric() and \
+            (int(message.text) >= 20) and \
+            (int(message.text) <= 30):
         gamer = Gamer(message.from_user.id)
         gamer.set_strawberry_count(int(message.text))
         pretty_print = strawberry_pint_count(gamer.strawberry_count)
@@ -106,10 +112,13 @@ async def next_step(message: types.Message):
                                  f'Ваш выбор', reply_markup=kb.games())
         else:
             await message.answer(f'{pretty_print}\n'
-                                 f'Ваш выбор', reply_markup=kb.games(count=gamer.strawberry_count))
+                                 f'Ваш выбор',
+                                 reply_markup=kb.games(
+                                     count=gamer.strawberry_count))
             await StrState.update_state(message, StrState.FINAL_GAME)
     else:
-        await message.answer(f'Поздравляю с победой 🍓🧠🥳', reply_markup=kb.start_games())
+        await message.answer('Поздравляю с победой 🍓🧠🥳',
+                             reply_markup=kb.start_games())
         await StrState.update_state(message, StrState.START_GAME)
         gamer.update_strawberry_count(0)
         gamer.update_stat()
@@ -118,7 +127,8 @@ async def next_step(message: types.Message):
 async def the_end(message: types.Message):
     gamer = Gamer(message.from_user.id)
     if message.text == '🍓':
-        await message.answer(f'В этот раз удача не на твоей стороне😈😈😈', reply_markup=kb.start_games())
+        await message.answer('В этот раз удача не на твоей стороне😈😈😈',
+                             reply_markup=kb.start_games())
         await StrState.update_state(message, StrState.START_GAME)
     gamer.set_strawberry_count(0)
     gamer.update_stat(win=False)
@@ -126,7 +136,11 @@ async def the_end(message: types.Message):
 
 def register_handler_game1(dispatcher: Dispatcher):
     # Хендлеры для первой игры
-    dispatcher.register_message_handler(begin, state=StrState.START_GAME)
-    dispatcher.register_message_handler(first_step, state=StrState.FIRST_STEP)
-    dispatcher.register_message_handler(next_step_reply, state=StrState.GAME_STEP)
-    dispatcher.register_message_handler(the_end, state=StrState.FINAL_GAME)
+    dispatcher.register_message_handler(begin,
+                                        state=StrState.START_GAME)
+    dispatcher.register_message_handler(first_step,
+                                        state=StrState.FIRST_STEP)
+    dispatcher.register_message_handler(next_step_reply,
+                                        state=StrState.GAME_STEP)
+    dispatcher.register_message_handler(the_end,
+                                        state=StrState.FINAL_GAME)

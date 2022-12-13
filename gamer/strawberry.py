@@ -29,5 +29,3 @@ class Gamer:
     def print_stat(self):
         """Возвращение статистики"""
         return db.statistics(self.chat_id)
-
-

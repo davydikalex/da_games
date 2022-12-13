@@ -24,4 +24,3 @@ services:
       - pg_db
     ports:
       - "3000:8000"
-

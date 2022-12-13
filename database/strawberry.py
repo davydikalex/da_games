@@ -7,9 +7,9 @@ class StrDB(DataBase):
     def create_record_table(self, *args):
         """Добавление новой записи в базу данных"""
         query = """
-        INSERT INTO 
-            users (chat_id, strawberry_count, win, lose) 
-        VALUES 
+        INSERT INTO
+            users (chat_id, strawberry_count, win, lose)
+        VALUES
             (%s, %s, 0, 0)
         """
         self.execute_query(query, *args)
@@ -109,5 +109,3 @@ class StrDB(DataBase):
         """
         statistics = self.execute_query(query, chatID, read=True)[0]
         return statistics
-
-

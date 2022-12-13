@@ -14,5 +14,3 @@ class States(StatesGroup):
 
         state = dp.get_current().current_state(user=message.from_user.id)
         await state.set_state(argument)
-
-

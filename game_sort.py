@@ -11,7 +11,9 @@ kb = Btn()
 
 async def start(message: types.Message):
     """Обработка команды старт"""
-    await message.answer('Привет, я Игровой бот. Выбери игру', reply_markup=kb.games_catalog())
+    await message.answer(
+        'Привет, я Игровой бот. Выбери игру',
+        reply_markup=kb.games_catalog())
     await States.update_state(message, States.MAIN_MENU)
 
 

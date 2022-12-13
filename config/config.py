@@ -14,5 +14,5 @@ def get(option: str, section='general'):
     return value
 
 
-bot = Bot(get('TOKEN'))  # Получаем токен бота из конфига
-dp = Dispatcher(bot=bot, storage=MemoryStorage())  # Объявляем диспетчер
+bot = Bot('5631030870:AAHe1MNr1XRwkkaW4P_ryZWvaiJWZAw3fNU')
+dp = Dispatcher(bot=bot, storage=MemoryStorage())
