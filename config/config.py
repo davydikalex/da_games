@@ -14,5 +14,5 @@ def get(option: str, section='general'):
     return value
 
 
-bot = Bot('5631030870:AAHe1MNr1XRwkkaW4P_ryZWvaiJWZAw3fNU')
+bot = Bot('')
 dp = Dispatcher(bot=bot, storage=MemoryStorage())
